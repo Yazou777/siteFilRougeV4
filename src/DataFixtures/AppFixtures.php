@@ -797,12 +797,14 @@ class AppFixtures extends Fixture
         $CouscousSimo->setTraDescription("Vous livre votre semoule en 2-3 jours");
         $CouscousSimo->setTraPrix(5.99);
         $manager->persist($CouscousSimo);
+        $CouscousSimo->addCommande($commande1client1);
 
         $marcTransPorc= new Transporteur();
         $marcTransPorc->setTraNom("MarcTransPorc");
         $marcTransPorc->setTraDescription("Specialiste en livraison de porc");
         $marcTransPorc->setTraPrix(15);
         $manager->persist($marcTransPorc);
+        $marcTransPorc->addCommande($commande2client1);
 
         $laPoste= new Transporteur();
         $laPoste->setTraNom("LaPoste");

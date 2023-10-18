@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TransporteurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +24,14 @@ class Transporteur
 
     #[ORM\Column]
     private ?float $tra_prix = null;
+
+    #[ORM\OneToMany(mappedBy: 'com_transporteur', targetEntity: Commande::class)]
+    private Collection $commandes;
+
+    public function __construct()
+    {
+        $this->commandes = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -67,6 +77,36 @@ class Transporteur
     public function setTraPrix(float $tra_prix): static
     {
         $this->tra_prix = $tra_prix;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setComTransporteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getComTransporteur() === $this) {
+                $commande->setComTransporteur(null);
+            }
+        }
 
         return $this;
     }

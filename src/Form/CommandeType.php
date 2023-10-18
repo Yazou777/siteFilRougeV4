@@ -16,12 +16,12 @@ class CommandeType extends AbstractType
         $builder
         
             //->add('com_date')
-            ->add('com_commentaire', null, ['required' => true ,
-            'label' => 'Commentaire',])
-            ->add('com_adresse_livraison', null, ['required' => true ,
-                'label' => 'Adresse de livraison',])
-            ->add('com_adresse_facturation', null, ['required' => true,
-                'label' => 'Adresse de facturation',])
+            // ->add('com_commentaire', null, ['required' => true ,
+            // 'label' => 'Commentaire',])
+            // ->add('com_adresse_livraison', null, ['required' => true ,
+            //     'label' => 'Adresse de livraison',])
+            // ->add('com_adresse_facturation', null, ['required' => true,
+            //     'label' => 'Adresse de facturation',])
             //->add('save', SubmitType::class)
             //->add('com_uti')
             

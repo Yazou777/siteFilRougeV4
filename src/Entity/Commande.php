@@ -39,6 +39,10 @@ class Commande
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $com_adresse_facturation = null;
 
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Transporteur $com_transporteur = null;
+
     public function __construct()
     {
         $this->com_date = new \DateTimeImmutable();
@@ -175,6 +179,18 @@ class Commande
     public function setComAdresseFacturation(string $com_adresse_facturation): static
     {
         $this->com_adresse_facturation = $com_adresse_facturation;
+
+        return $this;
+    }
+
+    public function getComTransporteur(): ?Transporteur
+    {
+        return $this->com_transporteur;
+    }
+
+    public function setComTransporteur(?Transporteur $com_transporteur): static
+    {
+        $this->com_transporteur = $com_transporteur;
 
         return $this;
     }

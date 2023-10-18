@@ -87,11 +87,12 @@ class CommandeController extends AbstractController
         'user' => $this->getUser()
     ]);
     $form->handleRequest($request);
-    //dd( $form->get('transporteur')->getData()->getAdrRue());
+    //dd( $form->get('transporteur')->getData());
     if ($form->isSubmitted() && $form->isValid()) {
         $adresseLivraison = $form->get('adr_rue')->getData();
         $commentaire = $form->get('commentaire')->getData();
         $adresseFacture = $form->get('adr_fac')->getData();
+        $transporteur = $form->get('transporteur')->getData();
       //  $fdp = $form->get('transporteur')->getData();
          // dd( $form->get('transporteur')->getData());
             // $adresseLivraison = $form->get('com_adresse_livraison')->getData();
@@ -115,7 +116,7 @@ class CommandeController extends AbstractController
         $commande->setComAdresseFacturation(str_replace("[-br]", " ",$adresseFacture));
         $commande->setComAdresseLivraison(str_replace("[-br]", " ",$adresseLivraison));
         $commande->setComCommentaire($commentaire);
-
+        $commande->setComtransporteur($transporteur);
      // On parcourt le panier pour créer les détails de commande
      foreach($panier as $proId => $quantite){
          $panier = new Panier();
