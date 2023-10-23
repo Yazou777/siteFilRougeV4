@@ -43,6 +43,18 @@ class Commande
     #[ORM\JoinColumn(nullable: false)]
     private ?Transporteur $com_transporteur = null;
 
+    #[ORM\Column]
+    private ?bool $com_isPaid = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $com_moyen_paiement = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $com_stripe_session_id = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $com_paypal_id = null;
+
     public function __construct()
     {
         $this->com_date = new \DateTimeImmutable();
@@ -191,6 +203,54 @@ class Commande
     public function setComTransporteur(?Transporteur $com_transporteur): static
     {
         $this->com_transporteur = $com_transporteur;
+
+        return $this;
+    }
+
+    public function isComIsPaid(): ?bool
+    {
+        return $this->com_isPaid;
+    }
+
+    public function setComIsPaid(bool $com_isPaid): static
+    {
+        $this->com_isPaid = $com_isPaid;
+
+        return $this;
+    }
+
+    public function getComMoyenPaiement(): ?string
+    {
+        return $this->com_moyen_paiement;
+    }
+
+    public function setComMoyenPaiement(?string $com_moyen_paiement): static
+    {
+        $this->com_moyen_paiement = $com_moyen_paiement;
+
+        return $this;
+    }
+
+    public function getComStripeSessionId(): ?string
+    {
+        return $this->com_stripe_session_id;
+    }
+
+    public function setComStripeSessionId(?string $com_stripe_session_id): static
+    {
+        $this->com_stripe_session_id = $com_stripe_session_id;
+
+        return $this;
+    }
+
+    public function getComPaypalId(): ?string
+    {
+        return $this->com_paypal_id;
+    }
+
+    public function setComPaypalId(?string $com_paypal_id): static
+    {
+        $this->com_paypal_id = $com_paypal_id;
 
         return $this;
     }

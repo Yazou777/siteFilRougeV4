@@ -782,6 +782,7 @@ class AppFixtures extends Fixture
         $commande1client1->setComCommentaire("attention aux chiens");
         $commande1client1->setComAdresseLivraison("A la maison");
         $commande1client1->setComAdresseFacturation("A la maison");
+        $commande1client1->setComIsPaid(false);
         $manager->persist($commande1client1);
         $client1->addCommande($commande1client1);
 
@@ -789,6 +790,7 @@ class AppFixtures extends Fixture
         $commande2client1->setComCommentaire("attention aux chiennes");
         $commande2client1->setComAdresseLivraison("Chez moi");
         $commande2client1->setComAdresseFacturation("Chez moi");
+        $commande2client1->setComIsPaid(true);
         $manager->persist($commande2client1);
         $client1->addCommande($commande2client1);
 

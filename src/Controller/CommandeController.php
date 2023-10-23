@@ -50,7 +50,6 @@ class CommandeController extends AbstractController
         $sousTotal = 0;
         $total = 0;
         $totalQte = 0;
-        $fdp = 5.5;
         foreach($panier as $id => $quantity){
             $produit = $produitRepository->find($id);
 
@@ -58,12 +57,12 @@ class CommandeController extends AbstractController
                 'produit' => $produit,
                 'quantite' => $quantity
             ];
-            $sousTotal += $produit->getProPrix() * $quantity;
+            $total += $produit->getProPrix() * $quantity;
             //$total += $produit->getProPrix() * $quantity +$fdp;
             $totalQte +=  $quantity;
         }
-        $total = $sousTotal+$fdp;
-        return $this->render('commande/index.html.twig',compact('data','total','totalQte','form','fdp','sousTotal'));
+       // $total = $sousTotal+$fdp;
+        return $this->render('commande/index.html.twig',compact('data','total','totalQte','form'));
     }
 
 
@@ -77,6 +76,28 @@ class CommandeController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
 
         $panier = $session->get('panier', []);
+
+
+        $data = [];
+        $sousTotal = 0;
+        $total = 0;
+        $totalQte = 0;
+        //$fdp = 5.5;
+        foreach($panier as $id => $quantity){
+            $produit = $produitRepository->find($id);
+
+            $data[] = [
+                'produit' => $produit,
+                'quantite' => $quantity
+            ];
+            $sousTotal += $produit->getProPrix() * $quantity;
+            //$total += $produit->getProPrix() * $quantity +$fdp;
+            $totalQte +=  $quantity;
+        }
+       
+
+
+
        // dd($panier);
     if($panier === []){
         $this->addFlash('message', 'Votre panier est vide');
@@ -93,8 +114,9 @@ class CommandeController extends AbstractController
         $commentaire = $form->get('commentaire')->getData();
         $adresseFacture = $form->get('adr_fac')->getData();
         $transporteur = $form->get('transporteur')->getData();
-      //  $fdp = $form->get('transporteur')->getData();
-         // dd( $form->get('transporteur')->getData());
+        $fdp = $form->get('transporteur')->getData()->getTraPrix();
+        $total = $sousTotal+$fdp;
+        //dd( $form->get('transporteur')->getData()->getTraPrix());
             // $adresseLivraison = $form->get('com_adresse_livraison')->getData();
             // $adresseFacture = $form->get('com_adresse_facturation')->getData();
             // $commentaire = $form->get('com_commentaire')->getData();
@@ -117,6 +139,8 @@ class CommandeController extends AbstractController
         $commande->setComAdresseLivraison(str_replace("[-br]", " ",$adresseLivraison));
         $commande->setComCommentaire($commentaire);
         $commande->setComtransporteur($transporteur);
+        $commande->setComIsPaid(false);
+        $commande->setComMoyenPaiement('stripe');
      // On parcourt le panier pour créer les détails de commande
      foreach($panier as $proId => $quantite){
          $panier = new Panier();
@@ -140,6 +164,7 @@ class CommandeController extends AbstractController
        $session->remove('panier');
 
         $this->addFlash('message', 'Commande créée avec succès');
-        return $this->redirectToRoute('app_accueil');
+        //return $this->redirectToRoute('app_accueil');
+        return $this->render('commande/recap.html.twig',compact('data','total','totalQte','fdp','sousTotal','transporteur','adresseLivraison'));
     }
 }

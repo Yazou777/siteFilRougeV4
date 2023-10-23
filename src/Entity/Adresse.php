@@ -40,7 +40,8 @@ class Adresse
 
     public function __toString(): string
     {
-        return $this->adr_rue .'[-br]'.
+        return $this->adr_nom .' '.$this->adr_prenom .'[-br]'.
+        $this->adr_rue .'[-br]'.
         $this->adr_code_postal.' '.$this->adr_ville;
     }
 
