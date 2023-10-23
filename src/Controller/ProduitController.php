@@ -53,7 +53,6 @@ class ProduitController extends AbstractController
         $catParentNom = $categorieRepository->findOneBy([ "id" => $proCatId])->getCatParent()->getCatNom();
 
         //dd($catParentId);
-       
         return $this->render('produit/detail.html.twig', [
             'pro' => $pro,
             'description' => $description,

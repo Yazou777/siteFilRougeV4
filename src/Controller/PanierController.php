@@ -34,7 +34,17 @@ class PanierController extends AbstractController
             $totalQte +=  $quantity;
         }
         //dd($data);
-        return $this->render('panier/index.html.twig',compact('data','total','totalQte'));
+        //return $this->render('panier/index.html.twig',compact('data','total','totalQte'));
+        return $this->render('panier/index.html.twig',[
+            "data" => $data,
+            "total" => $total,
+            "totalQte" => $totalQte,
+        //     "chemin_de_fer" => [
+        //         ["name" => $catParentNom, "link" => "/accueil/".$catParentNom],
+        //          ["name" => $catNom, "link" => "/produit/".$catNom],
+        //          ["name" => $pro_nom, "link" => "/detail_produit/".$pro_nom],
+        //    ]
+        ]);
     }
 
 
