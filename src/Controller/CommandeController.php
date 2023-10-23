@@ -141,6 +141,8 @@ class CommandeController extends AbstractController
         $commande->setComtransporteur($transporteur);
         $commande->setComIsPaid(false);
         $commande->setComMoyenPaiement('stripe');
+        $moyenPaiement = $commande->getComMoyenPaiement();
+       // dd($moyenPaiement);
      // On parcourt le panier pour créer les détails de commande
      foreach($panier as $proId => $quantite){
          $panier = new Panier();
@@ -165,6 +167,6 @@ class CommandeController extends AbstractController
 
         $this->addFlash('message', 'Commande créée avec succès');
         //return $this->redirectToRoute('app_accueil');
-        return $this->render('commande/recap.html.twig',compact('data','total','totalQte','fdp','sousTotal','transporteur','adresseLivraison'));
+        return $this->render('commande/recap.html.twig',compact('data','total','totalQte','fdp','sousTotal','transporteur','adresseLivraison','moyenPaiement'));
     }
 }
