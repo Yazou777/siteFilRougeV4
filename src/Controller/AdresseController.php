@@ -22,6 +22,14 @@ class AdresseController extends AbstractController
         ]);
     }
 
+    #[Route('/mesAdresse', name: 'app_adresse_mon_index', methods: ['GET'])]
+    public function monIndex(AdresseRepository $adresseRepository): Response
+    {
+        return $this->render('adresse/index.html.twig', [
+            'adresses' => $adresseRepository->findBy(['adr_uti' => $this->getUser()])
+        ]);
+    }
+
     #[Route('/new', name: 'app_adresse_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
